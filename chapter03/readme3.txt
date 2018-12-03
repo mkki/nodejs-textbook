@@ -1,0 +1,1 @@
+I'll be delivered little by little. The divided pieces are called chunks.

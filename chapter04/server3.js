@@ -1,19 +1,19 @@
 const http = require('http');
 
-const parseCookie = ( cookie = '' ) =>
+const parseCookie = (cookie = '') =>
     cookie
-        .split(';')
-        .map(v => v.split('='))
-        .map(([k, ...vs]) => [k, vs.join('=')])
-        .reduce((acc, [k, v]) => {
-            acc[k.trim()] = decodeURIComponent(v);
-            return acc;
-        }, {});
+    .split(';')
+    .map(v => v.split('='))
+    .map(([k, ...vs]) => [k, vs.join('=')])
+    .reduce((acc, [k, v]) => {
+        acc[k.trim()] = decodeURIComponent(v);
+        return acc;
+    }, {});
 
 http.createServer((req, res) => {
     const cookies = parseCookie(req.headers.cookie);
     console.log(req.url, cookies);
-    res.writeHead(200, { 'Set-Cookie' : 'mycookie=test '});
+    res.writeHead(200, { 'Set-Cookie': 'mycookie=test ' });
     res.end('Hello Cookie');
 }).listen(8082, () => {
     console.log('8082 port is waiting')

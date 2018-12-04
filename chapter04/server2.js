@@ -6,7 +6,7 @@ http.createServer((req, res) => {
         if (err) {
             throw err;
         }
-        
+
         res.end(data);
     });
 }).listen(8081, () => {

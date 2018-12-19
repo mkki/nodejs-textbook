@@ -1,6 +1,6 @@
 document.querySelectorAll('#user-list tr').forEach(function (el) {
     el.addEventListener('click', function () {
-        var id = el.querySelector(tr).textContent;
+        var id = el.querySelector('td').textContent;
         getComment(id);
     });
 });
@@ -48,7 +48,7 @@ function getComment(id) {
     xhr.onload = function () {
         if (xhr.status === 200) {
             var comments = JSON.parse(xhr.responseText);
-            var tbody = document.querySelector('#user-list tbody');
+            var tbody = document.querySelector('#comment-list tbody');
             tbody.innerHTML = '';
 
             comments.map(function (comment) {
@@ -60,7 +60,7 @@ function getComment(id) {
                 td.textContent = comment.commenter.name;
                 row.appendChild(td);
                 td = document.createElement('td');
-                td.textContent = comment.commnent;
+                td.textContent = comment.comment;
                 row.appendChild(td);
                 
                 var edit = document.createElement('button');
@@ -105,6 +105,8 @@ function getComment(id) {
 
                 td = document.createElement('td');
                 td.appendChild(edit);
+                row.appendChild(td);
+                td = document.createElement('td');
                 td.appendChild(remove);
                 row.appendChild(td);
                 tbody.appendChild(row);
@@ -113,11 +115,11 @@ function getComment(id) {
             console.error(xhr.responseText);
         }
     };
-    xhr.open('GET', '/comments' + id);
+    xhr.open('GET', '/comments/' + id);
     xhr.send();
 }
 
-document.getElementById('#user-form').addEventListener('click', function (e) {
+document.getElementById('user-form').addEventListener('submit', function (e) {
     e.preventDefault();
 
     var name = e.target.username.value;

@@ -4,33 +4,37 @@ var User = require('../schemas/user');
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/', function (req, res, next) {
-    User.find({})
-        .then((users) => {
-            console.log(users);
-            res.json(users);
-        })
-        .catch((err) => {
-            console.error(err);
-            next(err);
-        });
+router.get('/', async (req, res, next) => {
+    try {
+        const users = await User.find({});
+        console.log(users);
+        res.json(users);
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
 });
 
-router.post('/', function (req, res, next) {
+router.post('/', async (req, res, next) => {
     const user = new User({
         name: req.body.name,
         age: req.body.age,
         married: req.body.married,
     });
+    
+    try {
+        const result = await user.save();
+        console.log(result);
+        res.status(201).json(result);
+    } catch (err) {
+        console.log(err);
+        next(err);
+    }
     user.save()
         .then((result) => {
-            console.log(result);
-            res.status(201).json(result);
         })
         .catch((err) => {
-            console.log(err);
-            next(err);
         });
-});
+    });
 
 module.exports = router;

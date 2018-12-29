@@ -1,7 +1,7 @@
 {
   "name": "nodebird",
   "version": "0.0.1",
-  "description": "SNS service using express",
+  "description": "sns application using express",
   "main": "app.js",
   "scripts": {
     "test": "nodemon app"
